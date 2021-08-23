@@ -3,8 +3,8 @@
 VERSION ?= `cat VERSION`
 MAJ_VERSION := $(shell echo $(VERSION) | sed 's/\([0-9][0-9]*\)\.\([0-9][0-9]*\)\(\.[0-9][0-9]*\)*/\1/')
 MIN_VERSION := $(shell echo $(VERSION) | sed 's/\([0-9][0-9]*\)\.\([0-9][0-9]*\)\(\.[0-9][0-9]*\)*/\1.\2/')
-ECR_REPO       ?= 108584212669.dkr.ecr.us-east-1.amazonaws.com
-IMAGE_NAME     ?= $(ECR_REPO)/elixir-node
+ECR_REPO       ?= circlesll
+IMAGE_NAME     ?= $(ECR_REPO)/alpine-elixir-node
 
 help:
 	@echo "$(IMAGE_NAME):$(VERSION)"
@@ -18,6 +18,7 @@ clean: ## Clean up generated images
 
 rebuild: clean build ## Rebuild the Docker image
 
-release: build ## Rebuild and release the Docker image to Docker Hub
+push: ## Push the Docker image to Docker Hub
+	docker login
 	docker push $(IMAGE_NAME):$(VERSION)
 	docker push $(IMAGE_NAME):latest
