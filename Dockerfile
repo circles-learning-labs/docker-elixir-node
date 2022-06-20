@@ -1,11 +1,11 @@
 # syntax = docker/dockerfile:1
-FROM elixir:1.10.4-alpine
+FROM elixir:1.13.4-alpine
 
 # Important!  Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT=2021-07-29
+ENV REFRESHED_AT=2022-05-04
 ENV MIX_ENV=prod
 
 RUN apk --no-cache upgrade
@@ -32,7 +32,7 @@ RUN apk --no-cache add \
 # Install node/npm
 ENV NVM_DIR /root/.nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-ENV NODE_VERSION 10.16.3
+ENV NODE_VERSION 15.5.1
 RUN . $NVM_DIR/nvm.sh && nvm install -s $NODE_VERSION
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
