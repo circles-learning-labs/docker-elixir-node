@@ -5,7 +5,7 @@ FROM elixir:1.13.4-alpine
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT=2022-05-04
+ENV REFRESHED_AT=2022-06-22
 ENV MIX_ENV=prod
 
 RUN apk --no-cache upgrade
@@ -16,7 +16,6 @@ RUN apk --no-cache add \
   libc-dev \
   make \
   curl \
-  python2 \
   openssh \
   bash \
   ca-certificates \
@@ -27,14 +26,13 @@ RUN apk --no-cache add \
   grep \
   util-linux \
   binutils \
-  findutils
+  findutils \
+  npm       \
+  nodejs \
+  yarn
 
-# Install node/npm
-ENV NVM_DIR /root/.nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-ENV NODE_VERSION 15.5.1
-RUN . $NVM_DIR/nvm.sh && nvm install -s $NODE_VERSION
-ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+# Set node version
+ENV NODE_VERSION 16.15.0
 
 RUN mix local.hex --force
 RUN mix local.rebar --force
